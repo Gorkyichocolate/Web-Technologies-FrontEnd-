@@ -1,0 +1,128 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: antiquewhite;
+  font-family: Arial, sans-serif;
+}
+
+/* Верхняя панель */
+.hrbar {
+  background-color: rgb(220, 96, 96);
+  height: 60px; /* было 40px — увеличено ×1.5 */
+  border-bottom: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  font-size: medium;
+}
+
+.hrbar .left {
+  display: flex;
+  align-items: center;
+}
+
+.hrbar .center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.hrbar .right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+#logo {
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+}
+
+#search {
+  width: 300px;
+  height: 30px;
+  padding: 5px;
+}
+
+button {
+  height: 30px;
+}
+
+.main {
+  display: flex;
+}
+
+#vrbar {
+  background-color: rgb(255, 162, 162);
+  width: 160px; 
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 20px;
+}
+
+#vrbar ul {
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+}
+
+
+#vrbar li {
+  margin: 5px 0;
+  padding: 8px 10px;         
+  border-radius: 10px;        
+  transition: background-color 0.3s ease; 
+}
+
+#vrbar li:hover {
+  background-color: rgb(220, 100, 100);
+
+.mainlinks,
+.secondlinks,
+.Navigator,
+.preferences {
+  font-size: large;
+  background-color: rgb(254, 141, 141);
+  border-radius: 15px;
+  padding: 10px;
+}
+
+/* Контент */
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+/* Сетка видео */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 колонки */
+  gap: 20px;
+}
+
+.video-card {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.video-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.video-title {
+  padding: 10px;
+  font-size: 14px;
+  color: #333;
+}
