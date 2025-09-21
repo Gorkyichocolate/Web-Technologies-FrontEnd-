@@ -8,7 +8,7 @@ body {
 .hrbar {
   background-color: rgb(220, 96, 96);
   height: 60px;
-  border-bottom: 1px solid black;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -104,12 +104,13 @@ button {
 .video-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 30px;
+  margin: 70px;
 }
 
 .video-card {
   width: 250px;
-  background-color: white;
+  background-color: rgb(244, 185, 185);
   border-radius: 8px;
 }
 
@@ -122,5 +123,6 @@ button {
 
 .video-title {
   padding: 10px;
-
+  margin: 10px;
+  
 }
