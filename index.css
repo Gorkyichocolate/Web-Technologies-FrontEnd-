@@ -110,6 +110,7 @@ button {
 
 .video-card {
   width: 250px;
+  height: 250px;
   background-color: rgb(244, 185, 185);
   border-radius: 8px;
 }
@@ -123,6 +124,4 @@ button {
 
 .video-title {
   padding: 10px;
-  margin: 10px;
-  
 }
