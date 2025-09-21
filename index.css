@@ -125,3 +125,14 @@ button {
 .video-title {
   padding: 10px;
 }
+
+a {
+  text-decoration: none; 
+  color: inherit;        
+  outline: none;          
+}
+
+a:focus,
+a:active {
+  outline: none;        
+}
