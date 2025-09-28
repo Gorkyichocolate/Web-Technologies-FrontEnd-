@@ -8,23 +8,20 @@
 </head>
 <body>
     <header>
-        <div>
-
+        <div class="nav">
+            <div class="left">
+                <h3><a href="index.html">MEMTube</a></h3>
+            </div>
+            <div class="center">
+                <input type="text" id="search" placeholder="Search">
+                <button>Search</button>
+            </div>
+            <div class="right"> 
+                <a class="username"id="userprofile" href="profile.html">Username</a>
+                <img id="logo" src="https://raw.githubusercontent.com/gist/tutorialmailing/40f0faffe0b4feaddba028c522308b26/raw/96fb3a4c0be0bff18e96ec03e22f5921f0f7b2a4/user-placeholder.svg">
+            </div>
         </div>
     </header>
-    <div class="nav">
-        <div class="left">
-            <h2>MEMTube</h2>
-        </div>
-        <div class="center">
-            <input type="text" id="search" placeholder="Search">
-            <button>Search</button>
-        </div>
-        <div class="right"> 
-            <a id="userprofile" href="profile.html">Username</a>
-            <img id="logo" src="https://raw.githubusercontent.com/gist/tutorialmailing/40f0faffe0b4feaddba028c522308b26/raw/96fb3a4c0be0bff18e96ec03e22f5921f0f7b2a4/user-placeholder.svg">
-        </div>
-        </div>
     <div class="main">
         <div id="vrbar">
             <ul class="mainlinks">
@@ -47,21 +44,64 @@
                 <li>Reports</li>
                 <li>Help</li>
         </ul>
-    </div>
+        </div>
     <div class="main-content">
         <div class="sidebar">
+            <div id="logo1">
+                <img  src="https://raw.githubusercontent.com/gist/tutorialmailing/40f0faffe0b4feaddba028c522308b26/raw/96fb3a4c0be0bff18e96ec03e22f5921f0f7b2a4/user-placeholder.svg">
+                <div class="username">Username</div>
+            </div>
             <ul>
                 <li>Account</li>
                 <li>Design</li>
                 <li>Notifications</li>
                 <li>Confidentiality</li>
                 <li>Video Preferences</li>
-                <li></li>
+                <li>Statistics</li>
             </ul>
         </div>
+        <div class="content">
+    <h2>Account Settings</h2>
+    <div class="avatar">
+      <img src="https://raw.githubusercontent.com/gist/tutorialmailing/40f0faffe0b4feaddba028c522308b26/raw/96fb3a4c0be0bff18e96ec03e22f5921f0f7b2a4/user-placeholder.svg" alt="Avatar">
+      <button>Change Avatar</button>
     </div>
-    <footer>
-
-    </footer>
+            <form>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter your Username">
+                </div>
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" placeholder="Enter your first name">
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" placeholder="Enter your last name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob">
+                </div>
+                <div class="form-group">
+                    <label for="created">Account Created</label>
+                    <input type="text" id="created" value="2025-09-28" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="password">New Password</label>
+                    <input type="password" id="password" placeholder="Enter new password">
+                </div>
+                <button class="btn save" type="submit">Save Changes</button>
+                <button class="btn logout" type="button">Log Out</button>
+            </form>
+        </div>
+    </div>
+    <footer class="footer">
+        <p>Kuanysh Beibarys</p>
+    </footer>   
 </body>
 </html>
