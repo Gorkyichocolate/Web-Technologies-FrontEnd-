@@ -1,0 +1,118 @@
+body {
+  background-color: antiquewhite;
+  font-family: Arial, sans-serif;
+}
+
+.navbar-custom {
+  background-color: rgb(220, 96, 96);
+}
+
+.navbar-brand, .nav-link {
+  color: #fff !important;
+  font-weight: bold;
+}
+
+.navbar-brand:hover, .nav-link:hover {
+  color: #ffffff !important;
+  transform: scale(1.05);
+}
+
+#logo {
+  width: 35px;
+  height: 35px;
+  margin-left: 10px;
+}
+
+.sidebar {
+  background-color: rgb(255, 162, 162);
+  border-radius: 10px;
+  padding: 15px;
+  min-height: 100vh;
+}
+
+.sidebar h5 {
+  text-align: center;
+  color: #fff;
+  background-color: rgb(254, 141, 141);
+  padding: 8px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 8px 0;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.sidebar li:hover,
+.active-link {
+  background-color: rgb(220, 100, 100);
+  color: white;
+}
+
+.report-box {
+  background-color: rgb(255, 235, 235);
+  max-width: 800px;
+  width: 100%;
+  border-radius: 20px;
+}
+
+.report-box h2 {
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+.report-box form label {
+  font-weight: 600;
+}
+
+.btn-danger {
+  background-color: rgb(220, 96, 96);
+  border: none;
+}
+
+.btn-danger:hover {
+  background-color: rgb(250, 125, 125);
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.footer {
+  background-color: rgb(220, 96, 96);
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  padding: 15px;
+  margin-top: 40px;
+  font-size: 16px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  outline: none;
+}
+
+a:hover,
+a:focus {
+  text-decoration: none;
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    min-height: auto;
+    margin-bottom: 20px;
+  }
+
+  .report-box {
+    margin: 20px;
+  }
+}
