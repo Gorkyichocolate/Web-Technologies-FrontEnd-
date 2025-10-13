@@ -5,27 +5,37 @@ body {
   font-family: Arial, sans-serif;
 }
 
+a {
+  text-decoration: none; 
+  color: inherit;        
+  outline: none;          
+}
+
+a:focus,
+a:active {
+  outline: none;        
+}
+
 .main {
   display: flex;
 }
 
 .nav {
-  background-color: rgb(220, 96, 96);
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  font-size: medium;
+background-color: rgb(220, 96, 96);
+height: 70px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 0 20px;
+font-size: medium;
 }
 
 .nav .left {
   display: flex;
   align-items: center;
+  margin-bottom: 1px;
   width: auto;
-  color: #ffffff;
-  border: 3px;
-  border-radius: 8px;
+  height: 70px;
 }
 
 .nav .center {
@@ -52,41 +62,20 @@ body {
   width: 300px;
   height: 30px;
   padding: 5px;
-  border-radius: 6px;
-  border: 1px solid #ffffff;
-  transition: all 0.3s ease;
-}
-
-#search:focus {
-  border-color: rgb(234, 138, 138);
 }
 
 button {
-  height: 35px;
-  padding: 0 15px;
-  border: none;
-  border-radius: 8px;
-  background-color: rgb(228, 137, 137);
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-button:hover {
-  background-color: rgb(251, 121, 121);
-  transform: scale(1.05);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  height: 30px;
 }
 
 #vrbar {
   background-color: rgb(255, 162, 162);
-  width: 180px; 
+  width: 160px; 
   min-height: 100vh; 
   display: flex;
   flex-direction: column;
   gap: 20px;
   padding-top: 20px;
-  position: relative;
 }
 
 #vrbar ul {
@@ -95,18 +84,18 @@ button:hover {
   margin: 0;
 }
 
+
 #vrbar li {
   margin: 5px 0;
   padding: 8px 10px;         
   border-radius: 10px;        
   text-align: center; 
-  transition: all 0.3s ease; 
+  transition: background-color 0.3s ease; 
   cursor: pointer;
 }
 
 #vrbar li:hover {
   background-color: rgb(220, 100, 100);
-  transform: scale(1.05);
 }
 
 .mainlinks,
@@ -125,145 +114,19 @@ button:hover {
   margin: auto;
   margin-top: 50px; 
   margin-bottom: 100px;             
-  background: rgb(240, 160, 160);
+  background-color: rgb(231, 131, 129);
   display: flex;              
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;    
+  align-items: center;      
   border-radius: 30px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-  overflow: hidden;
-}
-
-.sidebar {
-  width: 200px;
-  height: 100%;
-  background-color:rgb(227, 129, 129);
-
-}
-
-
-.sidebar ul {
-  list-style: none;
-  padding: 10px;
-  margin: 0;
-  margin-top: 20px;
-  background-color: rgb(233, 114, 114);
   
 }
-
-.sidebar li {
-  margin: 10px 0;
-  padding: 10px 15px;
-  border-radius: 12px;
-  text-align: left; 
-  transition: all 0.3s ease; 
-  cursor: pointer;
-  font-weight: bold;
-  
-  
+.main-content ul{
+    list-style: none;
+    padding: 10px;
+    margin: 0;
 }
 
-.sidebar li:hover {
-  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-}
-
-
-
-
-#logo1 {
-  margin-left: 65px;
-  margin-right: 65px;
-  margin-top: 20px;
-  margin-bottom: 40px;
-  height: 70px;
-  width: 70px;
-  align-items: center;
-}
-
-.username {
-  text-align: center;
-}
-
-.content {
-  flex: 1;   
-  border-radius: 20px;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.avatar {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.avatar img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin-right: 15px;
-
-}
-
-
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-.form-group label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #aaa;
-  border-radius: 6px;
-}
-
-.btn {
- 
-  transition: background 0.3s;
-}
-
-
-.left:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-footer {
-  position: fixed;     
-  bottom: 0;           
-  width: 100%;
-  background-color: rgb(220, 96, 96);
-  color: white;
-  text-align: center;
-  font-weight: bold;
-  font-size: 16px;
-  margin-top: auto;
-}
-
-.footer p {
-  margin: 0;
-}
-
-a {
-  color: inherit;           
-  text-decoration: none;   
-}
-
-a:hover,
-a:focus,
-a:active,
-a:visited {
-  color: inherit;          
-  text-decoration: none;
-  outline: none;        
+.main-content li{
+    font-weight: bold;
 }
