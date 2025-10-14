@@ -8,12 +8,13 @@ body {
 .hrbar {
   background-color: rgb(220, 96, 96);
   height: 70px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
   font-size: medium;
+  position: relative;
+  z-index: 10;
 }
 
 .hrbar .left {
@@ -42,7 +43,9 @@ body {
   width: 30px;
   height: 30px;
   margin-left: 10px;
+  cursor: pointer;
 }
+
 .left:hover {
   transform: scale(1.01);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
@@ -65,11 +68,10 @@ button {
   display: flex;
 }
 
-
 #vrbar {
   background-color: rgb(255, 162, 162);
-  width: 160px; 
-  min-height: 100vh; 
+  width: 160px;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -82,13 +84,12 @@ button {
   margin: 0;
 }
 
-
 #vrbar li {
   margin: 5px 0;
-  padding: 8px 10px;         
-  border-radius: 10px;        
-  text-align: center; 
-  transition: background-color 0.3s ease; 
+  padding: 8px 10px;
+  border-radius: 10px;
+  text-align: center;
+  transition: background-color 0.3s ease;
   cursor: pointer;
 }
 
@@ -111,7 +112,6 @@ button {
   padding: 20px;
 }
 
-
 .video-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -120,15 +120,13 @@ button {
   box-sizing: border-box;
 }
 
-
 .video-card {
   background-color: rgb(244, 185, 185);
   border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 
 .video-card:hover {
   transform: scale(1.03);
@@ -143,26 +141,107 @@ button {
   transition: opacity 0.3s ease;
 }
 
-
 .video-title {
   padding: 10px;
   text-align: center;
   font-weight: bold;
 }
 
-
 .video-card:hover img {
   opacity: 0.8;
 }
 
-
 a {
-  text-decoration: none; 
-  color: inherit;        
-  outline: none;          
+  text-decoration: none;
+  color: inherit;
+  outline: none;
 }
 
 a:focus,
 a:active {
-  outline: none;        
+  outline: none;
+}
+
+#clock {
+  text-align: center;
+  font-size: 2rem;
+  margin: 20px 0;
+  font-weight: bold;
+}
+
+.popup {
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  display: none;
+  text-align: left;
+  width: 180px;
+  z-index: 1000;
+}
+
+.popup a {
+  display: block;
+  padding: 10px 15px;
+  color: black;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.popup a:hover {
+  background-color: #f2f2f2;
+}
+
+.theme-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-left: 15px;
+}
+
+.theme-buttons button {
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#darkBtn {
+  background-color: white;
+  color: black;
+}
+
+#darkBtn:hover {
+  opacity: 0.8;
+}
+
+body.dark-mode {
+  background-color: #222;
+  color: white;
+}
+
+body.dark-mode .hrbar {
+  background-color: #333;
+}
+
+body.dark-mode #vrbar {
+  background-color: #444;
+}
+
+body.dark-mode .video-card {
+  background-color: #555;
+}
+
+body.dark-mode .popup {
+  background-color: #333;
+  color: white;
+  border-color: #444;
+}
+
+body.dark-mode .popup a {
+  color: white;
 }
