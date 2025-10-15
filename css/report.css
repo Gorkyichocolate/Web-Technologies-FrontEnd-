@@ -116,3 +116,45 @@ a:focus {
     margin: 20px;
   }
 }
+
+.faq-box {
+  background-color: rgb(255, 235, 235);
+  max-width: 800px;
+  width: 100%;
+  border-radius: 20px;
+}
+
+.faq-question {
+  width: 100%;
+  background-color: rgb(220, 96, 96);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 5px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.faq-question:hover {
+  background-color: rgb(250, 125, 125);
+  transform: scale(1.02);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  padding: 0 20px;
+  background-color: rgb(255, 245, 245);
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.faq-answer p {
+  margin: 10px 0;
+}
+

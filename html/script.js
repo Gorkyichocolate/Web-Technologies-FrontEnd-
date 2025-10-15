@@ -85,3 +85,22 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const faqButtons = document.querySelectorAll(".faq-question");
+
+  faqButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      const answer = button.nextElementSibling;
+      if (answer.style.maxHeight) {
+        answer.style.maxHeight = null;
+        answer.style.paddingTop = "0";
+        answer.style.paddingBottom = "0";
+      } else {
+        answer.style.maxHeight = answer.scrollHeight + "px";
+        answer.style.paddingTop = "10px";
+        answer.style.paddingBottom = "10px";
+      }
+    });
+  });
+});
