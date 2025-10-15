@@ -86,10 +86,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const faqButtons = document.querySelectorAll(".faq-question");
+const faqButtons = document.querySelectorAll(".faq-question");
 
-  faqButtons.forEach(button => {
+faqButtons.forEach(button => {
     button.addEventListener("click", () => {
       const answer = button.nextElementSibling;
       if (answer.style.maxHeight) {
@@ -102,5 +101,5 @@ document.addEventListener("DOMContentLoaded", () => {
         answer.style.paddingBottom = "10px";
       }
     });
-  });
 });
+
