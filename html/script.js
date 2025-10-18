@@ -103,3 +103,65 @@ faqButtons.forEach(button => {
     });
 });
 
+
+//assignment 6
+
+const memes = [
+  "/images/videoframe_64966.png",
+  "/images/videoframe_2042.png",
+  "/images/videoframe_2481.png",
+  "/images/videoframe_2694.png",
+  "/images/videoframe_7667.png",
+  "/images/videoframe_8916.png",
+  "/images/videoframe_4806.png",
+  "/images/videoframe_5377.png"
+];
+
+const carousel = document.getElementById("carousel");
+const openCase = document.getElementById("openCase");
+
+for (let i = 0; i < 5; i++) { 
+  memes.forEach(src => {
+    const img = document.createElement("img");
+    img.src = src;
+    carousel.appendChild(img);
+  });
+}
+
+let offset = 0;
+let spinning = false;
+
+openCase.addEventListener("click", () => {
+  if (spinning) return;
+  spinning = true;
+  openCase.disabled = true;
+
+  let speed = 30;
+  let stopAfter = 4000 + Math.random() * 2000;
+  let startTime = performance.now();
+
+  function spin(now) {
+    let elapsed = now - startTime;
+    offset += speed;
+    carousel.style.transform = `translateX(-${offset}px)`;
+
+    if (offset > memes.length * 150 * 5) {
+      offset = 0;
+    }
+
+    if (elapsed > stopAfter * 0.7) speed *= 0.985;
+
+    if (elapsed < stopAfter) {
+      requestAnimationFrame(spin);
+    } else {
+      spinning = false;
+      openCase.disabled = false;
+
+      const visibleIndex = Math.floor((offset % (memes.length * 150)) / 150) % memes.length;
+      const winner = memes[visibleIndex].split("/").pop().replace(".jpg", "");
+      alert(`🎉 You got: ${winner}!`);
+    }
+  }
+
+  requestAnimationFrame(spin);
+});
