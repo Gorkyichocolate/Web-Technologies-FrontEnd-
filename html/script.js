@@ -106,62 +106,173 @@ faqButtons.forEach(button => {
 
 //assignment 6
 
-const memes = [
-  "/images/videoframe_64966.png",
-  "/images/videoframe_2042.png",
-  "/images/videoframe_2481.png",
-  "/images/videoframe_2694.png",
-  "/images/videoframe_7667.png",
-  "/images/videoframe_8916.png",
-  "/images/videoframe_4806.png",
-  "/images/videoframe_5377.png"
+//Task-1  DOM Manipulation and Styling
+const items = [
+  { src: "/images/videoframe_2042.png", rarity: "shit", chance: 40 },
+  { src: "/images/videoframe_2481.png", rarity: "common", chance: 30 },
+  { src: "/images/videoframe_2694.png", rarity: "rare", chance: 15 },
+  { src: "/images/videoframe_7667.png", rarity: "epic", chance: 10 },
+  { src: "/images/videoframe_8916.png", rarity: "legendary", chance: 5 },
 ];
 
-const carousel = document.getElementById("carousel");
-const openCase = document.getElementById("openCase");
-
-for (let i = 0; i < 5; i++) { 
-  memes.forEach(src => {
-    const img = document.createElement("img");
-    img.src = src;
-    carousel.appendChild(img);
-  });
+//Task-2  Sound Effects
+const soundPaths = {
+  spin: "/sounds/startsound.mp3",
+  shit: ["/sounds/shit.mp3", "/sounds/shit1.mp3"],
+  common: ["/sounds/common.mp3", "/sounds/common.mp3"],
+  rare: ["/sounds/rare.mp3", "/sounds/rare1.mp3"],
+  epic: ["/sounds/epic.mp3", "/sounds/epic.mp3"],
+  legendary: ["/sounds/legendary.mp3", "/sounds/legendary.mp3"],
+};
+const sounds = {};
+for (let key in soundPaths) {
+  if (Array.isArray(soundPaths[key])) {
+    sounds[key] = soundPaths[key].map(path => {
+      const audio = new Audio(path);
+      audio.preload = "auto";
+      return audio;
+    });
+  } else {
+    const audio = new Audio(soundPaths[key]);
+    audio.preload = "auto";
+    sounds[key] = audio;
+  }
 }
 
-let offset = 0;
+//Task-3  Selecting DOM Elements
+const carousel = document.getElementById("carousel");
+const openCase = document.getElementById("openCase");
+const winblock = document.getElementById("winblock");
+const winImage = document.getElementById("winImage");
+const prizeText = document.getElementById("prize");
+const itemWidth = 160;
+const centerX = 300;
+
+//Task-4  Arrays, Loops, Objects
+function getRandomItem() {
+  const totalChance = items.reduce((sum, i) => sum + i.chance, 0);
+  const rand = Math.random() * totalChance;
+  let cumulative = 0;
+  for (const item of items) {
+    cumulative += item.chance;
+    if (rand <= cumulative) return item;
+  }
+  return items[0];
+}
+
+function fillCarousel() {
+  carousel.innerHTML = "";
+  for (let i = 0; i < 30; i++) {
+    const randomItem = getRandomItem();
+    const img = document.createElement("img");
+    img.src = randomItem.src;
+    img.dataset.rarity = randomItem.rarity;
+    carousel.appendChild(img);
+  }
+}
+fillCarousel();
+
 let spinning = false;
 
-openCase.addEventListener("click", () => {
+//Task-5  Play start sound (Event handling)
+function startSpinSound() {
+  const spinSound = sounds.spin;
+  spinSound.currentTime = 0;
+  spinSound.volume = 0.7;
+  spinSound.play().catch(err => console.log("Audio blocked:", err));
+}
+
+//Task-6  Event Handling + Animation
+function startSpin() {
   if (spinning) return;
   spinning = true;
   openCase.disabled = true;
+  fillCarousel();
+  startSpinSound();
 
-  let speed = 30;
-  let stopAfter = 4000 + Math.random() * 2000;
+  let offset = 0;
+  let speed = 40;
+  const spinDuration = 4000 + Math.random() * 2000;
+  const decelerationStart = spinDuration * 0.6;
   let startTime = performance.now();
 
   function spin(now) {
-    let elapsed = now - startTime;
+    const elapsed = now - startTime;
     offset += speed;
     carousel.style.transform = `translateX(-${offset}px)`;
-
-    if (offset > memes.length * 150 * 5) {
-      offset = 0;
-    }
-
-    if (elapsed > stopAfter * 0.7) speed *= 0.985;
-
-    if (elapsed < stopAfter) {
+    if (offset > carousel.scrollWidth / 2) offset = 0;
+    if (elapsed > decelerationStart) speed *= 0.985;
+    if (elapsed < spinDuration) {
       requestAnimationFrame(spin);
     } else {
-      spinning = false;
-      openCase.disabled = false;
-
-      const visibleIndex = Math.floor((offset % (memes.length * 150)) / 150) % memes.length;
-      const winner = memes[visibleIndex].split("/").pop().replace(".jpg", "");
-      alert(`🎉 You got: ${winner}!`);
+      finishSpin(offset);
     }
   }
-
   requestAnimationFrame(spin);
+}
+
+//Task-7  Calculating Winner + Animation Finish
+function finishSpin(offset) {
+  const imgs = carousel.querySelectorAll("img");
+  const totalWidth = imgs.length * itemWidth;
+  const centerPos = (offset + centerX) % totalWidth;
+  const winnerIndex = Math.floor(centerPos / itemWidth);
+  const winnerImg = imgs[winnerIndex];
+  const winnerSrc = winnerImg.src;
+  const rarity = winnerImg.dataset.rarity;
+  const alignOffset = winnerIndex * itemWidth - centerX + itemWidth / 2;
+  carousel.style.transition = "transform 0.6s ease-out";
+  carousel.style.transform = `translateX(-${alignOffset}px)`;
+  setTimeout(() => showWin(winnerSrc, rarity), 600);
+}
+
+//Task-8  Switch-case + Callback + Popup Display
+function showWin(src, rarity) {
+  spinning = false;
+  openCase.disabled = false;
+
+  let rarityMessage;
+  switch (rarity) {
+    case "shit":
+      rarityMessage = "Govno";
+      break;
+    case "common":
+      rarityMessage = "common";
+      break;
+    case "rare":
+      rarityMessage = "Rare";
+      break;
+    case "epic":
+      rarityMessage = "Epic";
+      break;
+    case "legendary":
+      rarityMessage = "LEGENDARY";
+      break;
+    default:
+      rarityMessage = "Unknown rarity!";
+  }
+
+  setTimeout(() => {
+    const possibleSounds = sounds[rarity];
+    if (possibleSounds && possibleSounds.length > 0) {
+      const sound = possibleSounds[Math.floor(Math.random() * possibleSounds.length)];
+      sound.currentTime = 0;
+      sound.volume = 0.7;
+      sound.play().catch(err => console.log("Audio blocked:", err));
+    }
+  }, 100);
+
+  winImage.src = src;
+  prizeText.textContent = `You got a ${rarity.toUpperCase()} meme! ${rarityMessage}`;
+  winblock.style.display = "flex";
+}
+
+//Task-9  Additional Event Handling
+winblock.addEventListener("click", e => {
+  if (e.target === winblock) winblock.style.display = "none";
 });
+document.addEventListener("keydown", e => {
+  if (e.key === "Enter") startSpin();
+});
+openCase.addEventListener("click", startSpin);
+
