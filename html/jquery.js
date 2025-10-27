@@ -108,7 +108,7 @@ function showToast(message, type = "info") {
 
   setTimeout(() => toast.removeClass("show"), 2500);
 }
-// Task 8 — Like button with random counter ❤️
+// Task 8 — Like button with random counter
 $(".video-card").each(function () {
 
   let randomLikes = Math.floor(Math.random() * 10000);
