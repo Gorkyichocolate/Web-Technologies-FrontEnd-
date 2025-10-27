@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  console.log("jQuery is ready! 🚀");
+  console.log("jQuery is ready! ");
 
   // Task 1 — Real-time search filter
   $("#search").on("keyup", function () {
@@ -18,7 +18,7 @@ $(document).ready(function () {
 
   $("#search").on("input", function () {
     let input = $(this).val().toLowerCase();
-    $("#suggestions").remove(); // очищаем старые подсказки
+    $("#suggestions").remove();
     if (input.length > 0) {
       let matches = titles.filter((t) => t.toLowerCase().includes(input));
       let ul = $("<ul id='suggestions' class='suggestions'></ul>");
@@ -84,10 +84,10 @@ $(document).ready(function () {
   $("form").on("submit", function (e) {
     e.preventDefault();
     let btn = $(this).find("button[type='submit']");
-    btn.prop("disabled", true).html("⏳ Please wait...");
+    btn.prop("disabled", true).html("Please wait...");
     setTimeout(() => {
       btn.prop("disabled", false).html("Submit");
-      showToast("✅ Form submitted successfully!");
+      showToast("Form submitted successfully!");
     }, 2000);
   });
 
