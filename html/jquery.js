@@ -91,20 +91,31 @@ $(document).ready(function () {
     }, 2000);
   });
 
-  // Task 7 — Toast notification system
-  $("body").append('<div id="toast"></div>');
-  window.showToast = function (msg) {
-    let toast = $("#toast");
-    toast.text(msg).addClass("show");
-    setTimeout(() => toast.removeClass("show"), 2500);
-  };
+// Task 7 — Notification system (Toast)
+$("body").append('<div id="toast"></div>');
 
-// Task 8 — Like button with counter ❤️
+function showToast(message, type = "info") {
+  const toast = $("#toast");
+  toast.stop(true, true);
+  toast.text(message);
+
+  if (type === "success") toast.css("background-color", "#28a745");
+  else if (type === "error") toast.css("background-color", "#dc3545");
+  else if (type === "info") toast.css("background-color", "#007bff");
+  else toast.css("background-color", "#333");
+
+  toast.addClass("show");
+
+  setTimeout(() => toast.removeClass("show"), 2500);
+}
+// Task 8 — Like button with random counter ❤️
 $(".video-card").each(function () {
+
+  let randomLikes = Math.floor(Math.random() * 10000);
   $(this).append(`
     <div class="like-container">
       <button class="like-btn">♡</button>
-      <span class="like-count">0</span>
+      <span class="like-count">${randomLikes}</span>
     </div>
   `);
 });
@@ -113,16 +124,17 @@ $(document).on("click", ".like-btn", function () {
   let $btn = $(this);
   let $count = $btn.siblings(".like-count");
   let likes = parseInt($count.text());
+  let videoTitle = $btn.closest(".video-card").find(".video-title").text();
 
   if ($btn.hasClass("liked")) {
     $btn.removeClass("liked").text("♡");
     $count.text(likes - 1);
+    showToast(`💔 You unliked "${videoTitle}"`, "error");
   } else {
     $btn.addClass("liked").text("❤️");
     $count.text(likes + 1);
-
-    $btn.animate({ fontSize: "26px" }, 150)
-        .animate({ fontSize: "20px" }, 150);
+    $btn.animate({ fontSize: "26px" }, 150).animate({ fontSize: "20px" }, 150);
+    showToast(`❤️ You liked "${videoTitle}"`, "success");
   }
 });
   // Task 9 — Lazy image loading
