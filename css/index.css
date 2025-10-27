@@ -232,6 +232,10 @@ body.dark-mode #vrbar {
   background-color: #444;
 }
 
+body.dark-mode #vrbar ul {
+  background-color: #635b5b;
+}
+
 body.dark-mode .video-card {
   background-color: #555;
 }
@@ -244,4 +248,88 @@ body.dark-mode .popup {
 
 body.dark-mode .popup a {
   color: white;
+}
+
+.highlight {
+  background-color: rgb(226, 104, 104);
+  font-weight: bold;
+}
+
+.suggestions {
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  width: 200px;
+  list-style: none;
+  padding: 0;
+  margin-top: 5px;
+  z-index: 100;
+}
+.suggestions li {
+  padding: 5px;
+  cursor: pointer;
+}
+.suggestions li:hover {
+  background: #f0f0f0;
+}
+
+#progressBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 5px;
+  background: black;
+  width: 0%;
+  z-index: 1000;
+}
+
+#toast {
+  visibility: hidden;
+  min-width: 200px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  padding: 10px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1001;
+  opacity: 0;
+  transition: opacity 0.5s, bottom 0.5s;
+}
+#toast.show {
+  visibility: visible;
+  opacity: 1;
+  bottom: 50px;
+}
+
+.like-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.like-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  transition: 0.2s;
+}
+
+.like-btn.liked {
+  color: red;
+  transform: scale(1.2);
+}
+
+.like-btn:hover {
+  transform: scale(1.2);
+}
+
+.like-count {
+  font-weight: bold;
+  color: black;
 }

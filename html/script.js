@@ -276,3 +276,15 @@ document.addEventListener("keydown", e => {
 });
 openCase.addEventListener("click", startSpin);
 
+
+
+document.addEventListener("keydown", e =>{
+  if (e.code === "Space") changeback();
+})
+
+function changeback(){
+   document.body.style.backgroundColor ="red  "
+}
+
+
+
