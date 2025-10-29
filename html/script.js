@@ -287,4 +287,35 @@ function changeback(){
 }
 
 
+const sidebarItems = document.querySelectorAll("#sidebar li");
+    const sections = document.querySelectorAll("#content section");
 
+    sidebarItems.forEach((item) => {
+      item.addEventListener("click", () => {
+        const target = document.getElementById(item.dataset.target);
+        window.scrollTo({
+          top: target.offsetTop - 50,
+          behavior: "smooth",
+        });
+      });
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const id = entry.target.id;
+          const sidebarItem = document.querySelector(
+            `#sidebar li[data-target="${id}"]`
+          );
+          if (entry.isIntersecting) {
+            sidebarItems.forEach((i) => i.classList.remove("active"));
+            sidebarItem.classList.add("active");
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    sections.forEach((section) => {
+      observer.observe(section);
+    });

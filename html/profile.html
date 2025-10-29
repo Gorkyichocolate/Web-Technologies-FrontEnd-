@@ -1,74 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-    <link rel="stylesheet" href="/css/profile.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile Settings</title>
+  <link rel="stylesheet" href="/css/profile.css" />
+  <style>
     
+  </style>
 </head>
 <body>
-    <header>
-        <div>
-
-        </div>
-    </header>
-    <div class="nav">
-        <div class="left">
-            <h2>MEMTube</h2>
-        </div>
-        <div class="center">
-            <input type="text" id="search" placeholder="Search">
-            <button>Search</button>
-        </div>
-        <div class="right"> 
-            <a id="userprofile" href="profile.html">Username</a>
-            <img id="logo" src="https://raw.githubusercontent.com/gist/tutorialmailing/40f0faffe0b4feaddba028c522308b26/raw/96fb3a4c0be0bff18e96ec03e22f5921f0f7b2a4/user-placeholder.svg">
-        </div>
-        </div>
-    <div class="main">
-        <div id="vrbar">
-            <ul class="mainlinks">
-                <li><a>Main</a></li>
-                <li><a>Subscribes</a></li>
-            </ul>
-            <ul class="secondlinks">
-                <li>History</li>
-                <li>Playlists</li>
-                <li>Your videos</li>
-                <li>Liked</li>
-            </ul>
-            <ul class="Navigator">
-                <li>Music</li>
-                <li>Video Games</li>
-                <li>Sport</li>
-            </ul>
-            <ul class="preferences">
-                <li>Preferences</li>
-                <li>Reports</li>
-                <li>Help</li>
-        </ul>
+  <div class="nav">
+    <div class="left">
+      <h2>MEMTube</h2>
     </div>
+    <div class="center">
+      <input type="text" id="search" placeholder="Search" />
+      <button>Search</button>
+    </div>
+    <div class="right">
+      <a id="userprofile" href="#">Username</a>
+      <img
+        id="logo"
+        src="https://raw.githubusercontent.com/gist/tutorialmailing/40f0faffe0b4feaddba028c522308b26/raw/96fb3a4c0be0bff18e96ec03e22f5921f0f7b2a4/user-placeholder.svg"
+      />
+    </div>
+  </div>
+
+  <div class="main">
+    <div id="vrbar">
+      <ul class="mainlinks">
+        <li><a>Main</a></li>
+        <li><a>Subscribes</a></li>
+      </ul>
+      <ul class="secondlinks">
+        <li><a href="history.html">History</a></li>
+        <li>Liked</li>
+      </ul>
+      <ul class="preferences">
+        <li>Reports</li>
+        <li>Help</li>
+      </ul>
+    </div>
+
     <div class="main-content">
+      <div id="settings">
         <div id="sidebar">
-            <ul>
-                <li>Account</li>
-                <li>Design</li>
-                <li>Notifications</li>
-                <li>Confidentiality</li>
-                <li>Video Preferences</li>
-                <li></li>
-            </ul>
+          <ul>
+            <li class="active" data-target="account">Account</li>
+            <li data-target="design">Design</li>
+            <li data-target="notifications">Notifications</li>
+            <li data-target="confidentiality">Confidentiality</li>
+            <li data-target="video">Video Preferences</li>
+          </ul>
         </div>
-    </div>
-    <footer>
 
-    </footer>
+        <div id="content">
+          <section id="account">
+            <h2>Account Settings</h2>
+            <img
+              class="avatar"
+              src="https://raw.githubusercontent.com/gist/tutorialmailing/40f0faffe0b4feaddba028c522308b26/raw/96fb3a4c0be0bff18e96ec03e22f5921f0f7b2a4/user-placeholder.svg"
+            />
+            <p><strong>Username:</strong> Мафиозник</p>
+            <p><strong>Email:</strong> mem@gmail.com</p>
+            <p><strong>Name:</strong> Зубенко Михаил Петрович</p>
+            <button class="logout-btn">Logout</button>
+          </section>
+
+          <section id="design">
+            <h2>Design Settings</h2>
+            <label>
+              <input type="radio" name="theme" checked /> Light Theme
+            </label>
+            <br />
+            <label>
+              <input type="radio" name="theme" /> Dark Theme
+            </label>
+          </section>
+
+          <section id="notifications">
+            <h2>Notifications</h2>
+            <label>
+              <input type="checkbox" checked /> Notify about new videos
+            </label>
+            <br />
+            <label>
+              <input type="checkbox" /> Notify about comments
+            </label>
+          </section>
+
+          <section id="confidentiality">
+            <h2>Confidentiality</h2>
+            <label>
+              <input type="checkbox" /> Hide my nickname
+            </label>
+            <br />
+            <label>Change Login:</label>
+            <input type="text" placeholder="Enter new login" />
+          </section>
+
+          <section id="video">
+            <h2>Video Preferences</h2>
+            <label>Default video quality:</label>
+            <select>
+              <option>360p</option>
+              <option selected>720p</option>
+              <option>1080p</option>
+              <option>4K</option>
+            </select>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 <script>
-let userp = prompt("Whats your name?:");
-if(prompt){
-  alert("Hello"+userp)
-}
+    const sidebarItems = document.querySelectorAll("#sidebar li");
+    const sections = document.querySelectorAll("#content section");
+
+    sidebarItems.forEach((item) => {
+      item.addEventListener("click", () => {
+        const target = document.getElementById(item.dataset.target);
+        window.scrollTo({
+          top: target.offsetTop - 50,
+          behavior: "smooth",
+        });
+      });
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const id = entry.target.id;
+          const sidebarItem = document.querySelector(
+            `#sidebar li[data-target="${id}"]`
+          );
+          if (entry.isIntersecting) {
+            sidebarItems.forEach((i) => i.classList.remove("active"));
+            sidebarItem.classList.add("active");
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
 </script>
 </html>
