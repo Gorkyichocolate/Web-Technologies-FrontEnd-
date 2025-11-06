@@ -31,6 +31,7 @@ body {
   justify-content: center;
   align-items: center;
   gap: 10px;
+  position: relative;
 }
 
 .hrbar .right {
@@ -55,13 +56,35 @@ body {
 }
 
 #search {
-  width: 300px;
-  height: 30px;
-  padding: 5px;
+  width: 320px;
+  height: 36px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #fff;
+  outline: none;
+  box-sizing: border-box;
+  transition: box-shadow 0.15s ease, transform 0.12s;
 }
 
 button {
   height: 30px;
+}
+
+.center button {
+  height: 36px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: none;
+  background: #fff;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: background 0.15s, transform 0.12s;
+}
+
+.center button:hover,
+.center #search:focus {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
 }
 
 .main {
@@ -160,13 +183,6 @@ a {
 a:focus,
 a:active {
   outline: none;
-}
-
-#clock {
-  text-align: center;
-  font-size: 2rem;
-  margin: 20px 0;
-  font-weight: bold;
 }
 
 .popup {
@@ -332,4 +348,75 @@ body.dark-mode .popup a {
 .like-count {
   font-weight: bold;
   color: black;
+}
+
+/* Login / User link styles */
+#login a,
+#userprofile {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.18s ease, transform 0.12s;
+}
+
+#login a:hover,
+#userprofile:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Dark mode adjustments for the new controls */
+body.dark-mode .center #search {
+  background: #333;
+  color: #fff;
+  border-color: #555;
+}
+
+body.dark-mode .center button {
+  background: #444;
+  color: #fff;
+}
+
+body.dark-mode #login a,
+body.dark-mode #userprofile {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+/* Search Box Styling */
+.search-box {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    padding: 0 15px;
+    margin-left: 15px;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.search-box input {
+    width: 400px;
+    border: 0;
+    outline: 0;
+    padding: 12px;
+    background: transparent;
+    font-size: 15px;
+}
+
+.search-box img {
+    width: 18px;
+    cursor: pointer;
+}
+
+/* Main Content Container */
+.main-content {
+    width: 85%;
+    margin: 30px auto;
+    padding: 20px;
+    max-width: 1200px;
 }

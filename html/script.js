@@ -46,19 +46,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const pwd = document.getElementById("pwd");
     const rpwd = document.getElementById("rpwd");
 
+    // Базовая валидация
     if (username) {
       if (username.value.trim() === "") {
         errors.push("Username is required.");
-      }
-    }
-
-    if (email) {
-      const v = email.value.trim();
-      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (v === "") {
-        errors.push("Email is required.");
-      } else if (!emailRe.test(v)) {
-        errors.push("Email format is invalid.");
       }
     }
 
@@ -69,19 +60,21 @@ document.addEventListener("DOMContentLoaded", () => {
         errors.push("Password must be at least 6 characters.");
       }
     }
-    if (rpwd) {
-      if (rpwd.value.trim() === "") {
-        errors.push("Please repeat the password.");
-      } else if (pwd && rpwd.value !== pwd.value) {
-        errors.push("Passwords do not match.");
-      }
-    }
 
     if (errors.length > 0) {
       alert(errors.join("\n"));
       return;
     }
-    alert("Form validated successfully!");
+
+    // Если это форма логина (нет полей email и rpwd)
+    if (!email && !rpwd) {
+      // Успешный вход
+      alert("Login successful!");
+      window.location.href = "index.html"; // Редирект на главную
+    } else {
+      // Для формы регистрации оставляем текущее поведение
+      alert("Form validated successfully!");
+    }
   });
 
 });
@@ -103,10 +96,6 @@ faqButtons.forEach(button => {
     });
 });
 
-
-//assignment 6
-
-//Task-1  DOM Manipulation and Styling
 const items = [
   { src: "/images/videoframe_2042.png", rarity: "shit", chance: 40 },
   { src: "/images/videoframe_2481.png", rarity: "common", chance: 30 },
@@ -115,7 +104,6 @@ const items = [
   { src: "/images/videoframe_8916.png", rarity: "legendary", chance: 5 },
 ];
 
-//Task-2  Sound Effects
 const soundPaths = {
   spin: "/sounds/startsound.mp3",
   shit: ["/sounds/shit.mp3", "/sounds/shit1.mp3"],
@@ -139,7 +127,6 @@ for (let key in soundPaths) {
   }
 }
 
-//Task-3  Selecting DOM Elements
 const carousel = document.getElementById("carousel");
 const openCase = document.getElementById("openCase");
 const winblock = document.getElementById("winblock");
@@ -148,7 +135,6 @@ const prizeText = document.getElementById("prize");
 const itemWidth = 160;
 const centerX = 300;
 
-//Task-4  Arrays, Loops, Objects
 function getRandomItem() {
   const totalChance = items.reduce((sum, i) => sum + i.chance, 0);
   const rand = Math.random() * totalChance;
@@ -174,7 +160,6 @@ fillCarousel();
 
 let spinning = false;
 
-//Task-5  Play start sound (Event handling)
 function startSpinSound() {
   const spinSound = sounds.spin;
   spinSound.currentTime = 0;
@@ -182,7 +167,6 @@ function startSpinSound() {
   spinSound.play().catch(err => console.log("Audio blocked:", err));
 }
 
-//Task-6  Event Handling + Animation
 function startSpin() {
   if (spinning) return;
   spinning = true;
@@ -211,7 +195,6 @@ function startSpin() {
   requestAnimationFrame(spin);
 }
 
-//Task-7  Calculating Winner + Animation Finish
 function finishSpin(offset) {
   const imgs = carousel.querySelectorAll("img");
   const totalWidth = imgs.length * itemWidth;
@@ -226,7 +209,6 @@ function finishSpin(offset) {
   setTimeout(() => showWin(winnerSrc, rarity), 600);
 }
 
-//Task-8  Switch-case + Callback + Popup Display
 function showWin(src, rarity) {
   spinning = false;
   openCase.disabled = false;
