@@ -3,6 +3,7 @@ body {
   padding: 0;
   background-color: antiquewhite;
   font-family: Arial, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .hrbar {
@@ -13,8 +14,10 @@ body {
   justify-content: space-between;
   padding: 0 20px;
   font-size: medium;
-  position: relative;
-  z-index: 10;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
 }
 
 .hrbar .left {
@@ -53,6 +56,7 @@ body {
   border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
 #search {
@@ -64,7 +68,7 @@ body {
   background: #fff;
   outline: none;
   box-sizing: border-box;
-  transition: box-shadow 0.15s ease, transform 0.12s;
+  transition: box-shadow 0.15s ease, transform 0.12s, background-color 0.3s ease;
 }
 
 button {
@@ -79,7 +83,7 @@ button {
   background: #fff;
   cursor: pointer;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-  transition: background 0.15s, transform 0.12s;
+  transition: background 0.15s, transform 0.12s, background-color 0.3s ease;
 }
 
 .center button:hover,
@@ -94,17 +98,19 @@ button {
 #vrbar {
   background-color: rgb(255, 162, 162);
   width: 160px;
-  min-height: 100vh;
+  min-height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
   gap: 20px;
   padding-top: 20px;
+  transition: background-color 0.3s ease;
 }
 
 #vrbar ul {
   list-style: none;
   padding: 10px;
   margin: 0;
+  transition: background-color 0.3s ease;
 }
 
 #vrbar li {
@@ -128,6 +134,7 @@ button {
   background-color: rgb(254, 141, 141);
   border-radius: 15px;
   padding: 10px;
+  transition: background-color 0.3s ease;
 }
 
 .content {
@@ -137,7 +144,7 @@ button {
 
 .video-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
   padding: 40px;
   box-sizing: border-box;
@@ -148,7 +155,7 @@ button {
   border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 .video-card:hover {
@@ -168,6 +175,7 @@ button {
   padding: 10px;
   text-align: center;
   font-weight: bold;
+  transition: color 0.3s ease;
 }
 
 .video-card:hover img {
@@ -186,7 +194,7 @@ a:active {
 }
 
 .popup {
-  position: absolute;
+  position: fixed;
   top: 70px;
   right: 20px;
   background-color: #fff;
@@ -196,7 +204,8 @@ a:active {
   display: none;
   text-align: left;
   width: 180px;
-  z-index: 1000;
+  z-index: 1001;
+  transition: background-color 0.3s ease;
 }
 
 .popup a {
@@ -204,7 +213,7 @@ a:active {
   padding: 10px 15px;
   color: black;
   text-decoration: none;
-  transition: background 0.2s;
+  transition: background 0.2s, color 0.3s ease;
 }
 
 .popup a:hover {
@@ -229,35 +238,53 @@ a:active {
 #darkBtn {
   background-color: white;
   color: black;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #darkBtn:hover {
   opacity: 0.8;
 }
 
+/* Dark Mode Styles */
 body.dark-mode {
-  background-color: #222;
-  color: white;
+  background-color: #1a1a1a;
+  color: #e0e0e0;
 }
 
 body.dark-mode .hrbar {
-  background-color: #333;
+  background-color: #2d2d2d;
 }
 
 body.dark-mode #vrbar {
-  background-color: #444;
+  background-color: #2d2d2d;
 }
 
 body.dark-mode #vrbar ul {
-  background-color: #635b5b;
+  background-color: #3a3a3a;
+}
+
+body.dark-mode .mainlinks,
+body.dark-mode .secondlinks,
+body.dark-mode .Navigator,
+body.dark-mode .preferences {
+  background-color: #3a3a3a;
+}
+
+body.dark-mode #vrbar li:hover {
+  background-color: #4a4a4a;
 }
 
 body.dark-mode .video-card {
-  background-color: #555;
+  background-color: #2d2d2d;
+  color: #e0e0e0;
+}
+
+body.dark-mode .video-title {
+  color: #e0e0e0;
 }
 
 body.dark-mode .popup {
-  background-color: #333;
+  background-color: #2d2d2d;
   color: white;
   border-color: #444;
 }
@@ -266,54 +293,112 @@ body.dark-mode .popup a {
   color: white;
 }
 
+body.dark-mode .popup a:hover {
+  background-color: #3a3a3a;
+}
+
+body.dark-mode #darkBtn {
+  background-color: #444;
+  color: white;
+}
+
+body.dark-mode .center #search {
+  background: #3a3a3a;
+  color: #e0e0e0;
+  border-color: #555;
+}
+
+body.dark-mode .center button {
+  background: #3a3a3a;
+  color: #e0e0e0;
+}
+
+body.dark-mode #login a,
+body.dark-mode #userprofile {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e0e0e0;
+}
+
+body.dark-mode .like-count {
+  color: #e0e0e0;
+}
+
 .highlight {
   background-color: rgb(226, 104, 104);
   font-weight: bold;
+}
+
+body.dark-mode .highlight {
+  background-color: rgb(180, 80, 80);
+  color: white;
 }
 
 .suggestions {
   position: absolute;
   background: white;
   border: 1px solid #ccc;
-  width: 200px;
+  border-radius: 8px;
   list-style: none;
   padding: 0;
   margin-top: 5px;
-  z-index: 100;
+  z-index: 1002;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease;
 }
+
 .suggestions li {
-  padding: 5px;
+  padding: 10px 15px;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
+
 .suggestions li:hover {
   background: #f0f0f0;
+}
+
+body.dark-mode .suggestions {
+  background-color: #2d2d2d;
+  border-color: #444;
+}
+
+body.dark-mode .suggestions li {
+  color: #e0e0e0;
+}
+
+body.dark-mode .suggestions li:hover {
+  background-color: #3a3a3a;
 }
 
 #progressBar {
   position: fixed;
   top: 0;
   left: 0;
-  height: 5px;
-  background: black;
+  height: 4px;
+  background: linear-gradient(to right, rgb(220, 96, 96), rgb(255, 120, 120));
   width: 0%;
-  z-index: 1000;
+  z-index: 9999;
+  transition: width 0.1s ease;
 }
 
 #toast {
   visibility: hidden;
-  min-width: 200px;
+  min-width: 250px;
   background-color: #333;
   color: #fff;
   text-align: center;
   border-radius: 8px;
-  padding: 10px;
+  padding: 15px 20px;
   position: fixed;
   bottom: 30px;
   right: 30px;
-  z-index: 1001;
+  z-index: 10000;
   opacity: 0;
-  transition: opacity 0.5s, bottom 0.5s;
+  transition: opacity 0.3s ease, bottom 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
+
 #toast.show {
   visibility: visible;
   opacity: 1;
@@ -324,8 +409,13 @@ body.dark-mode .popup a {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  margin-bottom: 10px;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .like-btn {
@@ -333,7 +423,8 @@ body.dark-mode .popup a {
   border: none;
   cursor: pointer;
   font-size: 20px;
-  transition: 0.2s;
+  transition: transform 0.2s ease, color 0.2s ease;
+  color: white;
 }
 
 .like-btn.liked {
@@ -342,19 +433,19 @@ body.dark-mode .popup a {
 }
 
 .like-btn:hover {
-  transform: scale(1.2);
+  transform: scale(1.3);
 }
 
 .like-count {
   font-weight: bold;
-  color: black;
+  color: white;
+  font-size: 14px;
 }
 
-/* Login / User link styles */
 #login a,
 #userprofile {
   display: inline-block;
-  padding: 6px 10px;
+  padding: 6px 12px;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.15);
   color: white;
@@ -369,54 +460,207 @@ body.dark-mode .popup a {
   transform: translateY(-2px);
 }
 
-/* Dark mode adjustments for the new controls */
-body.dark-mode .center #search {
-  background: #333;
-  color: #fff;
-  border-color: #555;
-}
-
-body.dark-mode .center button {
-  background: #444;
-  color: #fff;
-}
-
-body.dark-mode #login a,
-body.dark-mode #userprofile {
-  background: rgba(255, 255, 255, 0.06);
-  color: #fff;
-}
-
-/* Search Box Styling */
 .search-box {
-    display: flex;
-    align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 25px;
-    padding: 0 15px;
-    margin-left: 15px;
-    background: #fff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  padding: 0 15px;
+  margin-left: 15px;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .search-box input {
-    width: 400px;
-    border: 0;
-    outline: 0;
-    padding: 12px;
-    background: transparent;
-    font-size: 15px;
+  width: 400px;
+  border: 0;
+  outline: 0;
+  padding: 12px;
+  background: transparent;
+  font-size: 15px;
 }
 
 .search-box img {
-    width: 18px;
-    cursor: pointer;
+  width: 18px;
+  cursor: pointer;
 }
 
-/* Main Content Container */
 .main-content {
-    width: 85%;
-    margin: 30px auto;
+  width: 85%;
+  margin: 30px auto;
+  padding: 20px;
+  max-width: 1200px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .video-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+    padding: 30px;
+  }
+}
+
+@media (max-width: 992px) {
+  .video-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
     padding: 20px;
-    max-width: 1200px;
+  }
+  
+  #vrbar {
+    width: 140px;
+  }
+  
+  #search {
+    width: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hrbar {
+    height: auto;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+  }
+  
+  .hrbar .left,
+  .hrbar .center,
+  .hrbar .right {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .hrbar .center {
+    order: 3;
+  }
+  
+  .hrbar .right {
+    order: 2;
+  }
+  
+  #search {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .main {
+    flex-direction: column;
+  }
+  
+  #vrbar {
+    width: 100%;
+    min-height: auto;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px;
+  }
+  
+  #vrbar ul {
+    display: flex;
+    gap: 10px;
+  }
+  
+  #vrbar li {
+    padding: 6px 10px;
+    font-size: 14px;
+  }
+  
+  .video-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    padding: 15px;
+  }
+  
+  .video-card img {
+    height: 120px;
+  }
+  
+  .popup {
+    right: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .hrbar .left h2 {
+    font-size: 1.2rem;
+  }
+  
+  #logo {
+    width: 25px;
+    height: 25px;
+  }
+  
+  .theme-buttons {
+    margin-left: 5px;
+  }
+  
+  #darkBtn {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+  
+  #vrbar {
+    flex-wrap: wrap;
+  }
+  
+  .video-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px;
+    padding: 10px;
+  }
+  
+  .video-card img {
+    height: 100px;
+  }
+  
+  .video-title {
+    padding: 8px;
+    font-size: 13px;
+  }
+  
+  #toast {
+    min-width: 200px;
+    padding: 12px 15px;
+    font-size: 14px;
+    right: 15px;
+    bottom: 15px;
+  }
+  
+  #toast.show {
+    bottom: 30px;
+  }
+  
+  .like-container {
+    padding: 6px 10px;
+    top: 5px;
+    right: 5px;
+  }
+  
+  .like-btn {
+    font-size: 16px;
+  }
+  
+  .like-count {
+    font-size: 12px;
+  }
+  
+  #userprofile {
+    display: none;
+  }
+}
+
+@media (max-width: 400px) {
+  .video-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+  
+  .video-card img {
+    height: 90px;
+  }
+  
+  .hrbar .right {
+    gap: 8px;
+  }
 }

@@ -1,30 +1,46 @@
-document.addEventListener("DOMContentLoaded", () => {
+  
+(function() {
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") {
+    document.documentElement.classList.add("dark-mode");
+    if (document.body) {
+      document.body.classList.add("dark-mode");
+    }
+  }
+})();
 
+document.addEventListener("DOMContentLoaded", () => {
+  const savedTheme = localStorage.getItem("theme");
   const darkBtn = document.getElementById("darkBtn");
+  
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark-mode");
+    if (darkBtn) darkBtn.textContent = "Light";
+  } else {
+    document.body.classList.remove("dark-mode");
+    if (darkBtn) darkBtn.textContent = "Dark";
+  }
+
   if (darkBtn) {
     darkBtn.addEventListener("click", () => {
-      document.body.classList.toggle("dark-mode");
+      const isDark = document.body.classList.toggle("dark-mode");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+      darkBtn.textContent = isDark ? "Light" : "Dark";
+      
+      if (typeof showToast === 'function') {
+        showToast(isDark ? "Dark mode enabled" : "Light mode enabled", "success");
+      }
     });
   }
 
-  function updateClock() {
-    const clock = document.getElementById("clock");
-    if (!clock) return;
-    const now = new Date();
-    clock.textContent = now.toLocaleTimeString();
-  }
-  setInterval(updateClock, 1000);
-  updateClock();
-
   const logo = document.getElementById("logo");
   const popupMenu = document.getElementById("popupMenu");
+  
   if (logo && popupMenu) {
     logo.addEventListener("click", (e) => {
       e.stopPropagation();
       popupMenu.style.display = popupMenu.style.display === "block" ? "none" : "block";
     });
-
-    popupMenu.addEventListener("click", (e) => e.stopPropagation());
 
     document.addEventListener("click", (e) => {
       if (!popupMenu.contains(e.target) && e.target !== logo) {
@@ -33,67 +49,88 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const form = document.getElementById("authForm");
-  if (!form) return;
+  const exitBtn = document.getElementById("exitBtn");
+  if (exitBtn) {
+    exitBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      localStorage.removeItem("currentUser");
+      showToast("Logged out successfully", "success");
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 1000);
+    });
+  }
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const errors = [];
-
-    const username = document.getElementById("username");
-    const email = document.getElementById("email");
-    const pwd = document.getElementById("pwd");
-    const rpwd = document.getElementById("rpwd");
-
-    // Базовая валидация
-    if (username) {
-      if (username.value.trim() === "") {
-        errors.push("Username is required.");
-      }
+  const currentUser = localStorage.getItem("currentUser");
+  const loginDiv = document.getElementById("login");
+  const userProfile = document.getElementById("userprofile");
+  
+  if (currentUser) {
+    if (loginDiv) loginDiv.style.display = "none";
+    if (userProfile) {
+      userProfile.style.display = "block";
+      userProfile.textContent = currentUser;
     }
+  } else {
+    if (loginDiv) loginDiv.style.display = "block";
+    if (userProfile) userProfile.style.display = "none";
+  }
 
-    if (pwd) {
-      if (pwd.value.trim() === "") {
-        errors.push("Password is required.");
-      } else if (pwd.value.length < 6) {
-        errors.push("Password must be at least 6 characters.");
-      }
+  function showToast(message, type = "info") {
+    let toast = document.getElementById("toast");
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.id = "toast";
+      document.body.appendChild(toast);
     }
-
-    if (errors.length > 0) {
-      alert(errors.join("\n"));
-      return;
-    }
-
-    // Если это форма логина (нет полей email и rpwd)
-    if (!email && !rpwd) {
-      // Успешный вход
-      alert("Login successful!");
-      window.location.href = "index.html"; // Редирект на главную
+    
+    toast.textContent = message;
+    toast.className = "show";
+    
+    if (type === "success") {
+      toast.style.background = "#4CAF50";
+    } else if (type === "error") {
+      toast.style.background = "#f44336";
     } else {
-      // Для формы регистрации оставляем текущее поведение
-      alert("Form validated successfully!");
+      toast.style.background = "#333";
     }
-  });
+    
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 3000);
+  }
 
+  window.showToast = showToast;
+
+  function updateClock() {
+    const clockElement = document.getElementById("clock");
+    if (clockElement) {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+    }
+  }
+  
+  setInterval(updateClock, 1000);
+  updateClock();
 });
 
 const faqButtons = document.querySelectorAll(".faq-question");
-
 faqButtons.forEach(button => {
-    button.addEventListener("click", () => {
-      const answer = button.nextElementSibling;
-      if (answer.style.maxHeight) {
-        answer.style.maxHeight = null;
-        answer.style.paddingTop = "0";
-        answer.style.paddingBottom = "0";
-      } else {
-        answer.style.maxHeight = answer.scrollHeight + "px";
-        answer.style.paddingTop = "10px";
-        answer.style.paddingBottom = "10px";
-      }
+  button.addEventListener("click", () => {
+    const answer = button.nextElementSibling;
+    const isOpen = answer.style.display === "block";
+    
+    document.querySelectorAll(".faq-answer").forEach(a => {
+      a.style.display = "none";
     });
+    
+    if (!isOpen) {
+      answer.style.display = "block";
+    }
+  });
 });
 
 const items = [
@@ -112,18 +149,13 @@ const soundPaths = {
   epic: ["/sounds/epic.mp3", "/sounds/epic.mp3"],
   legendary: ["/sounds/legendary.mp3", "/sounds/legendary.mp3"],
 };
+
 const sounds = {};
 for (let key in soundPaths) {
   if (Array.isArray(soundPaths[key])) {
-    sounds[key] = soundPaths[key].map(path => {
-      const audio = new Audio(path);
-      audio.preload = "auto";
-      return audio;
-    });
+    sounds[key] = soundPaths[key].map(path => new Audio(path));
   } else {
-    const audio = new Audio(soundPaths[key]);
-    audio.preload = "auto";
-    sounds[key] = audio;
+    sounds[key] = new Audio(soundPaths[key]);
   }
 }
 
@@ -136,168 +168,247 @@ const itemWidth = 160;
 const centerX = 300;
 
 function getRandomItem() {
-  const totalChance = items.reduce((sum, i) => sum + i.chance, 0);
-  const rand = Math.random() * totalChance;
+  const rand = Math.random() * 100;
   let cumulative = 0;
-  for (const item of items) {
+  for (let item of items) {
     cumulative += item.chance;
-    if (rand <= cumulative) return item;
+    if (rand < cumulative) return item;
   }
-  return items[0];
+  return items[items.length - 1];
 }
 
 function fillCarousel() {
+  if (!carousel) return;
   carousel.innerHTML = "";
-  for (let i = 0; i < 30; i++) {
-    const randomItem = getRandomItem();
-    const img = document.createElement("img");
-    img.src = randomItem.src;
-    img.dataset.rarity = randomItem.rarity;
-    carousel.appendChild(img);
+  for (let i = 0; i < 50; i++) {
+    const item = items[Math.floor(Math.random() * items.length)];
+    const div = document.createElement("div");
+    div.className = `carousel-item ${item.rarity}`;
+    div.innerHTML = `<img src="${item.src}" alt="${item.rarity}">`;
+    carousel.appendChild(div);
   }
 }
-fillCarousel();
+
+if (carousel) {
+  fillCarousel();
+}
 
 let spinning = false;
 
 function startSpinSound() {
-  const spinSound = sounds.spin;
-  spinSound.currentTime = 0;
-  spinSound.volume = 0.7;
-  spinSound.play().catch(err => console.log("Audio blocked:", err));
+  if (sounds.spin) {
+    sounds.spin.currentTime = 0;
+    sounds.spin.play();
+  }
 }
 
 function startSpin() {
-  if (spinning) return;
+  if (spinning || !carousel || !openCase) return;
   spinning = true;
   openCase.disabled = true;
-  fillCarousel();
-  startSpinSound();
 
-  let offset = 0;
-  let speed = 40;
-  const spinDuration = 4000 + Math.random() * 2000;
-  const decelerationStart = spinDuration * 0.6;
-  let startTime = performance.now();
-
-  function spin(now) {
-    const elapsed = now - startTime;
-    offset += speed;
-    carousel.style.transform = `translateX(-${offset}px)`;
-    if (offset > carousel.scrollWidth / 2) offset = 0;
-    if (elapsed > decelerationStart) speed *= 0.985;
-    if (elapsed < spinDuration) {
-      requestAnimationFrame(spin);
-    } else {
-      finishSpin(offset);
-    }
+  const winItem = getRandomItem();
+  const winIndex = Math.floor(Math.random() * 10) + 20;
+  
+  const items = carousel.querySelectorAll(".carousel-item");
+  if (items[winIndex]) {
+    items[winIndex].className = `carousel-item ${winItem.rarity}`;
+    items[winIndex].innerHTML = `<img src="${winItem.src}" alt="${winItem.rarity}">`;
   }
-  requestAnimationFrame(spin);
+
+  startSpinSound();
+  
+  const offset = -(winIndex * itemWidth - centerX);
+  carousel.style.transition = "transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99)";
+  carousel.style.transform = `translateX(${offset}px)`;
+
+  setTimeout(() => finishSpin(offset, winItem), 4000);
 }
 
-function finishSpin(offset) {
-  const imgs = carousel.querySelectorAll("img");
-  const totalWidth = imgs.length * itemWidth;
-  const centerPos = (offset + centerX) % totalWidth;
-  const winnerIndex = Math.floor(centerPos / itemWidth);
-  const winnerImg = imgs[winnerIndex];
-  const winnerSrc = winnerImg.src;
-  const rarity = winnerImg.dataset.rarity;
-  const alignOffset = winnerIndex * itemWidth - centerX + itemWidth / 2;
-  carousel.style.transition = "transform 0.6s ease-out";
-  carousel.style.transform = `translateX(-${alignOffset}px)`;
-  setTimeout(() => showWin(winnerSrc, rarity), 600);
+function finishSpin(offset, winItem) {
+  showWin(winItem.src, winItem.rarity);
+  
+  setTimeout(() => {
+    if (carousel) {
+      carousel.style.transition = "none";
+      carousel.style.transform = "translateX(0)";
+      fillCarousel();
+    }
+    spinning = false;
+    if (openCase) openCase.disabled = false;
+  }, 100);
 }
 
 function showWin(src, rarity) {
-  spinning = false;
-  openCase.disabled = false;
-
-  let rarityMessage;
-  switch (rarity) {
-    case "shit":
-      rarityMessage = "Govno";
-      break;
-    case "common":
-      rarityMessage = "common";
-      break;
-    case "rare":
-      rarityMessage = "Rare";
-      break;
-    case "epic":
-      rarityMessage = "Epic";
-      break;
-    case "legendary":
-      rarityMessage = "LEGENDARY";
-      break;
-    default:
-      rarityMessage = "Unknown rarity!";
-  }
-
-  setTimeout(() => {
-    const possibleSounds = sounds[rarity];
-    if (possibleSounds && possibleSounds.length > 0) {
-      const sound = possibleSounds[Math.floor(Math.random() * possibleSounds.length)];
-      sound.currentTime = 0;
-      sound.volume = 0.7;
-      sound.play().catch(err => console.log("Audio blocked:", err));
-    }
-  }, 100);
-
+  if (!winblock || !winImage || !prizeText) return;
+  
   winImage.src = src;
-  prizeText.textContent = `You got a ${rarity.toUpperCase()} meme! ${rarityMessage}`;
+  prizeText.textContent = `You won: ${rarity.toUpperCase()}!`;
+  winblock.classList.add(rarity);
   winblock.style.display = "flex";
+
+  const raritySound = sounds[rarity];
+  if (raritySound) {
+    const sound = Array.isArray(raritySound) 
+      ? raritySound[Math.floor(Math.random() * raritySound.length)]
+      : raritySound;
+    sound.currentTime = 0;
+    sound.play();
+  }
 }
 
-//Task-9  Additional Event Handling
-winblock.addEventListener("click", e => {
-  if (e.target === winblock) winblock.style.display = "none";
-});
+if (winblock) {
+  winblock.addEventListener("click", e => {
+    if (e.target === winblock) {
+      winblock.style.display = "none";
+      winblock.className = "winblock";
+    }
+  });
+}
+
 document.addEventListener("keydown", e => {
-  if (e.key === "Enter") startSpin();
+  if (e.key === "Escape" && winblock) {
+    winblock.style.display = "none";
+    winblock.className = "winblock";
+  }
 });
-openCase.addEventListener("click", startSpin);
 
-
-
-document.addEventListener("keydown", e =>{
-  if (e.code === "Space") changeback();
-})
-
-function changeback(){
-   document.body.style.backgroundColor ="red  "
+if (openCase) {
+  openCase.addEventListener("click", startSpin);
 }
 
+document.addEventListener("keydown", e => {
+  if (e.key === "b" || e.key === "B") {
+    changeback();
+  }
+});
+
+function changeback() {
+  const colors = ["antiquewhite", "lightblue", "lightgreen", "lightpink", "lightyellow"];
+  const currentBg = document.body.style.backgroundColor || "antiquewhite";
+  const currentIndex = colors.indexOf(currentBg);
+  const nextIndex = (currentIndex + 1) % colors.length;
+  document.body.style.backgroundColor = colors[nextIndex];
+}
 
 const sidebarItems = document.querySelectorAll("#sidebar li");
-    const sections = document.querySelectorAll("#content section");
+const sections = document.querySelectorAll("#content section");
 
-    sidebarItems.forEach((item) => {
-      item.addEventListener("click", () => {
-        const target = document.getElementById(item.dataset.target);
-        window.scrollTo({
-          top: target.offsetTop - 50,
-          behavior: "smooth",
-        });
-      });
-    });
+sidebarItems.forEach((item) => {
+  item.addEventListener("click", () => {
+    const targetId = item.getAttribute("data-target");
+    const targetSection = document.getElementById(targetId);
+    
+    if (targetSection) {
+      targetSection.scrollIntoView({ behavior: "smooth" });
+      
+      sidebarItems.forEach(i => i.classList.remove("active"));
+      item.classList.add("active");
+    }
+  });
+});
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const id = entry.target.id;
-          const sidebarItem = document.querySelector(
-            `#sidebar li[data-target="${id}"]`
-          );
-          if (entry.isIntersecting) {
-            sidebarItems.forEach((i) => i.classList.remove("active"));
-            sidebarItem.classList.add("active");
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        sidebarItems.forEach(item => {
+          if (item.getAttribute("data-target") === entry.target.id) {
+            sidebarItems.forEach(i => i.classList.remove("active"));
+            item.classList.add("active");
           }
         });
-      },
-      { threshold: 0.5 }
-    );
+      }
+    });
+  },
+  { threshold: 0.5 }
+);
 
-    sections.forEach((section) => {
-      observer.observe(section);
+sections.forEach((section) => {
+  observer.observe(section);
+});
+
+const video = document.getElementById('mainVideo');
+const playPause = document.getElementById('playPause');
+const muteBtn = document.getElementById('muteBtn');
+const vol = document.getElementById('vol');
+
+if (playPause && video) {
+  playPause.addEventListener('click', () => {
+    if (video.paused) {
+      video.play();
+      playPause.textContent = 'Pause';
+    } else {
+      video.pause();
+      playPause.textContent = 'Play';
+    }
+  });
+}
+
+if (muteBtn && video) {
+  muteBtn.addEventListener('click', () => {
+    video.muted = !video.muted;
+    muteBtn.textContent = video.muted ? 'Unmute' : 'Mute';
+  });
+}
+
+if (vol && video) {
+  vol.addEventListener('input', (e) => {
+    video.volume = e.target.value / 100;
+  });
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+      // Form validation and submission
+      const reportForm = document.getElementById('reportForm');
+      if (reportForm) {
+        reportForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          const name = document.getElementById('name').value.trim();
+          const email = document.getElementById('email').value.trim();
+          const topic = document.getElementById('topic').value;
+          const message = document.getElementById('message').value.trim();
+          
+          if (!name || !email || !topic || !message) {
+            if (typeof showToast === 'function') {
+              showToast('Please fill all required fields', 'error');
+            } else {
+              alert('Please fill all required fields');
+            }
+            return;
+          }
+          
+          if (typeof showToast === 'function') {
+            showToast('Report submitted successfully!', 'success');
+          } else {
+            alert('Report submitted successfully!');
+          }
+          
+          setTimeout(() => {
+            this.reset();
+          }, 1000);
+        });
+      }
+
+      const faqButtons = document.querySelectorAll('.faq-question');
+      console.log('FAQ buttons found:', faqButtons.length);
+      
+      faqButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          console.log('FAQ button clicked');
+          const answer = this.nextElementSibling;
+          const isOpen = answer.classList.contains('open');
+
+          document.querySelectorAll('.faq-answer').forEach(a => {
+            a.classList.remove('open');
+          });
+          
+          if (!isOpen) {
+            answer.classList.add('open');
+            console.log('Answer opened');
+          }
+        });
+      });
     });
