@@ -360,7 +360,7 @@ if (vol && video) {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-      // Form validation and submission
+
       const reportForm = document.getElementById('reportForm');
       if (reportForm) {
         reportForm.addEventListener('submit', function(e) {
