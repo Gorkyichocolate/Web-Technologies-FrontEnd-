@@ -4,40 +4,53 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Profile Settings</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/profile.css" />
-  <script src="/javascript/script.js"></script>
+  <style>
+    
+  </style>
 </head>
 <body>
-  <div class="nav">
+  <div class="hrbar">
     <div class="left">
-      <h2>MEMTube</h2>
+      <h2><a href="index.html">MEMTube</a></h2>
     </div>
     <div class="center">
-      <input type="text" id="search" placeholder="Search" />
+      <input type="text" id="search" placeholder="Search">
       <button>Search</button>
     </div>
-    <div class="right">
-      <a id="userprofile" href="#">Username</a>
+    <div class="right"> 
+      <div id="login"><a href="login.html">Login </a></div>
+      <a id="userprofile" href="profile.html">User</a>
       <img
         id="logo"
         src="https://raw.githubusercontent.com/gist/tutorialmailing/40f0faffe0b4feaddba028c522308b26/raw/96fb3a4c0be0bff18e96ec03e22f5921f0f7b2a4/user-placeholder.svg"
       />
+      <div class="theme-buttons">
+        <button id="darkBtn">Dark</button>
+      </div>
     </div>
   </div>
 
+  <div class="popup" id="popupMenu">
+    <a href="profile.html">Profile</a>
+    <a href="report.html">Report</a>
+    <a href="index.html" id="exitBtn">Exit</a>
+  </div>
+
   <div class="main">
-    <div id="vrbar">
+    <div id="vrbar">  
       <ul class="mainlinks">
-        <li><a>Main</a></li>
+        <li><a href="index.html">Main</a></li>
         <li><a>Subscribes</a></li>
+        <li><a href="cases.html">Cases</a></li>
       </ul>
       <ul class="secondlinks">
         <li><a href="history.html">History</a></li>
-        <li>Liked</li>
       </ul>
       <ul class="preferences">
-        <li>Reports</li>
-        <li>Help</li>
+        <li><a href="report.html">Reports</a></li>
+        <li><a href="report.html">Help</a></li>
       </ul>
     </div>
 
@@ -63,17 +76,17 @@
             <p><strong>Username:</strong> Мафиозник</p>
             <p><strong>Email:</strong> mem@gmail.com</p>
             <p><strong>Name:</strong> Зубенко Михаил Петрович</p>
-            <button class="logout-btn">Logout</button>
+            <button class="logout-btn" id="logoutBtn">Logout</button>
           </section>
 
           <section id="design">
             <h2>Design Settings</h2>
             <label>
-              <input type="radio" name="theme" checked /> Light Theme
+              <input type="radio" name="theme" id="lightThemeRadio" checked /> Light Theme
             </label>
             <br />
             <label>
-              <input type="radio" name="theme" /> Dark Theme
+              <input type="radio" name="theme" id="darkThemeRadio" /> Dark Theme
             </label>
           </section>
 
@@ -112,39 +125,9 @@
       </div>
     </div>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+  
 </body>
-<script>
-    const sidebarItems = document.querySelectorAll("#sidebar li");
-    const sections = document.querySelectorAll("#content section");
-
-    sidebarItems.forEach((item) => {
-      item.addEventListener("click", () => {
-        const target = document.getElementById(item.dataset.target);
-        window.scrollTo({
-          top: target.offsetTop - 50,
-          behavior: "smooth",
-        });
-      });
-    });
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const id = entry.target.id;
-          const sidebarItem = document.querySelector(
-            `#sidebar li[data-target="${id}"]`
-          );
-          if (entry.isIntersecting) {
-            sidebarItems.forEach((i) => i.classList.remove("active"));
-            sidebarItem.classList.add("active");
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    sections.forEach((section) => {
-      observer.observe(section);
-    });
-</script>
 </html>
