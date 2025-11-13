@@ -1,12 +1,41 @@
 $(document).ready(function () {
   console.log("jQuery is ready! ");
 
-  // Task 1 — Real-time search filter
-  $("#search").on("keyup", function () {
-    let value = $(this).val().toLowerCase();
+  const urlParams = new URLSearchParams(window.location.search);
+  const searchQuery = urlParams.get('search');
+  
+  if (searchQuery && $("#search").length) {
+    $("#search").val(searchQuery);
+    performSearch(searchQuery);
+  }
+
+  function performSearch(value) {
+    value = value.toLowerCase();
     $(".video-card").filter(function () {
       $(this).toggle($(this).text().toLowerCase().includes(value));
     });
+  }
+
+  // Task 1 — Real-time search filter
+  $("#search").on("keyup", function () {
+    let value = $(this).val();
+    performSearch(value);
+    
+    if (value.length > 0) {
+      history.pushState(null, '', `?search=${encodeURIComponent(value)}`);
+    } else {
+      history.pushState(null, '', window.location.pathname);
+    }
+  });
+
+  $("#search").on("keypress", function(e) {
+    if (e.which === 13) {
+      e.preventDefault();
+      let searchValue = $(this).val();
+      if (searchValue.length > 0) {
+        window.location.href = `index.html?search=${encodeURIComponent(searchValue)}`;
+      }
+    }
   });
 
   // Task 2 — Autocomplete search suggestions
@@ -28,8 +57,16 @@ $(document).ready(function () {
   });
 
   $(document).on("click", "#suggestions li", function () {
-    $("#search").val($(this).text());
+    let selectedText = $(this).text();
+    $("#search").val(selectedText);
     $("#suggestions").remove();
+    
+    if (!$(".video-card").length) {
+      window.location.href = `index.html?search=${encodeURIComponent(selectedText)}`;
+    } else {
+      performSearch(selectedText);
+      history.pushState(null, '', `?search=${encodeURIComponent(selectedText)}`);
+    }
   });
 
   $(document).click(function (e) {
@@ -110,7 +147,7 @@ function showToast(message, type = "info") {
 }
 // Task 8 — Like button with random counter
 $(".video-card").each(function () {
-
+ 
   let randomLikes = Math.floor(Math.random() * 10000);
   $(this).append(`
     <div class="like-container">
@@ -152,6 +189,5 @@ $(document).on("click", ".like-btn", function () {
     });
   });
 
-  // Initial check (load visible images)
   $(window).trigger("scroll");
 });
