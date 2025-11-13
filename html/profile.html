@@ -71,13 +71,22 @@
         <div id="content">
           <section id="account">
             <h2>Account Settings</h2>
-            <img
-              class="avatar"
-              src="https://raw.githubusercontent.com/gist/tutorialmailing/40f0faffe0b4feaddba028c522308b26/raw/96fb3a4c0be0bff18e96ec03e22f5921f0f7b2a4/user-placeholder.svg"
-            />
-            <p><strong>Username:</strong> Мафиозник</p>
-            <p><strong>Email:</strong> mem@gmail.com</p>
-            <p><strong>Name:</strong> Зубенко Михаил Петрович</p>
+            <div style="text-align: center; margin-bottom: 20px;">
+              <img
+                class="avatar"
+                id="profileAvatar"
+                src="https://raw.githubusercontent.com/gist/tutorialmailing/40f0faffe0b4feaddba028c522308b26/raw/96fb3a4c0be0bff18e96ec03e22f5921f0f7b2a4/user-placeholder.svg"
+                alt="User Avatar"
+              />
+              <br>
+              <button class="change-avatar-btn" id="changeAvatarBtn">
+                  Generate Random Avatar (API)
+              </button>
+            </div>
+            <p><strong>Username:</strong> <span id="profileUsername">Мафиозник</span></p>
+            <p><strong>Email:</strong> <span id="profileEmail">mem@gmail.com</span></p>
+            <p><strong>Birthday:</strong> <span id="profileBirthday">-</span></p>
+            <p><strong>Registered:</strong> <span id="profileRegistered">-</span></p>
             <button class="logout-btn" id="logoutBtn">Logout</button>
           </section>
 

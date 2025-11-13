@@ -145,3 +145,88 @@ input[type="email"]:focus {
   padding: 0 10px;
   box-sizing: border-box;
 }
+
+/* Validation Styles */
+input.error {
+  border: 2px solid #f44336 !important;
+  background-color: #ffebee;
+}
+
+.error-message {
+  color: #f44336;
+  font-size: 0.85em;
+  margin-top: 4px;
+  margin-bottom: 10px;
+  display: block;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+input:focus {
+  outline: none;
+  border: 2px solid #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+input.error:focus {
+  border: 2px solid #f44336;
+  box-shadow: 0 0 5px rgba(244, 67, 54, 0.3);
+}
+
+/* Toast Notification Styles */
+#toast {
+  visibility: hidden;
+  min-width: 250px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  padding: 16px;
+  position: fixed;
+  z-index: 9999;
+  left: 50%;
+  bottom: 30px;
+  transform: translateX(-50%);
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+#toast.show {
+  visibility: visible;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+/* Button hover effect */
+#buttonlogin {
+  transition: all 0.3s ease;
+}
+
+#buttonlogin:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+#buttonlogin:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

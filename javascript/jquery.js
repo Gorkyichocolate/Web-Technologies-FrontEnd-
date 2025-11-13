@@ -147,7 +147,7 @@ function showToast(message, type = "info") {
 }
 // Task 8 — Like button with random counter
 $(".video-card").each(function () {
-
+ 
   let randomLikes = Math.floor(Math.random() * 10000);
   $(this).append(`
     <div class="like-container">
