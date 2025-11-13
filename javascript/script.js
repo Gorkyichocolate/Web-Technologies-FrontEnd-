@@ -457,7 +457,6 @@ function handleLogin(e) {
   const username = document.getElementById('username');
   const password = document.getElementById('pwd');
   
-  // Validate fields
   if (!validateForm([username, password])) {
     showToast('Please fix the errors in the form', 'error');
     return;
@@ -466,21 +465,17 @@ function handleLogin(e) {
   const usernameValue = username.value.trim();
   const passwordValue = password.value.trim();
 
-  // Get users from localStorage
   const users = JSON.parse(localStorage.getItem('users')) || [];
-  
-  // Find user
   const user = users.find(u => u.username === usernameValue && u.password === passwordValue);
 
   if (user) {
-    // Set current user
     localStorage.setItem('currentUser', user.username);
     localStorage.setItem('currentUserEmail', user.email);
     
     showToast('Login successful! Redirecting...', 'success');
     
     setTimeout(() => {
-      window.location.href = 'index.html';
+      window.location.href = '../index.html';
     }, 1500);
   } else {
     showToast('Invalid username or password', 'error');
@@ -499,7 +494,6 @@ function handleSignup(e) {
   const repeatPassword = document.getElementById('rpwd');
   const birthday = document.getElementById('birthday');
 
-  // Validate all fields
   if (!validateForm([username, email, password, repeatPassword, birthday])) {
     showToast('Please fix the errors in the form', 'error');
     return;
@@ -510,10 +504,8 @@ function handleSignup(e) {
   const passwordValue = password.value.trim();
   const birthdayValue = birthday.value;
 
-  // Get existing users
   const users = JSON.parse(localStorage.getItem('users')) || [];
 
-  // Check if user already exists
   if (users.some(u => u.username === usernameValue)) {
     showToast('Username already exists', 'error');
     showFieldError(username, 'This username is already taken');
@@ -526,7 +518,6 @@ function handleSignup(e) {
     return;
   }
 
-  // Create new user
   const newUser = {
     username: usernameValue,
     email: emailValue,
@@ -546,13 +537,8 @@ function handleSignup(e) {
 }
 
 // Display user info on profile page
-if (window.location.pathname.includes('profile.html')) {
-  displayUserProfile();
-}
-
 function displayUserProfile() {
   const currentUser = localStorage.getItem('currentUser');
-  const currentUserEmail = localStorage.getItem('currentUserEmail');
   
   if (!currentUser) {
     window.location.href = 'login.html';
@@ -563,7 +549,6 @@ function displayUserProfile() {
   const user = users.find(u => u.username === currentUser);
 
   if (user) {
-    // Update profile page with user info
     const usernameDisplay = document.getElementById('profileUsername');
     const emailDisplay = document.getElementById('profileEmail');
     const birthdayDisplay = document.getElementById('profileBirthday');
@@ -575,7 +560,6 @@ function displayUserProfile() {
     if (registeredDisplay) registeredDisplay.textContent = new Date(user.registeredAt).toLocaleDateString();
   }
 
-  // Load saved avatar
   const savedAvatar = localStorage.getItem('userAvatar');
   const profileAvatar = document.getElementById('profileAvatar');
   const logoAvatar = document.getElementById('logo');
@@ -586,6 +570,21 @@ function displayUserProfile() {
   if (savedAvatar && logoAvatar) {
     logoAvatar.src = savedAvatar;
   }
+}
+
+// Logout handler
+const logoutBtn = document.getElementById('logoutBtn');
+if (logoutBtn) {
+  logoutBtn.addEventListener('click', () => {
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('currentUserEmail');
+    localStorage.removeItem('userAvatar');
+    localStorage.removeItem('userAvatarInfo');
+    showToast('Logged out successfully', 'success');
+    setTimeout(() => {
+      window.location.href = 'login.html';
+    }, 1000);
+  });
 }
 
 // Random User API Integration for Avatar
@@ -677,19 +676,4 @@ async function generateRandomAvatar() {
       changeAvatarBtn.textContent = '🎲 Generate Random Avatar (API)';
     }
   }
-}
-
-// Add logout handler that clears avatar
-const logoutBtn = document.getElementById('logoutBtn');
-if (logoutBtn) {
-  logoutBtn.addEventListener('click', () => {
-    localStorage.removeItem('currentUser');
-    localStorage.removeItem('currentUserEmail');
-    localStorage.removeItem('userAvatar');
-    localStorage.removeItem('userAvatarInfo');
-    showToast('Logged out successfully', 'success');
-    setTimeout(() => {
-      window.location.href = 'login.html';
-    }, 1000);
-  });
 }
